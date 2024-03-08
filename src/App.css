@@ -129,7 +129,28 @@ h1, .h4, h4 {
   color: white;
   
 }
+p {
+  color: #ffffff;
+  font-size: 20px;
+}
 
+p a {
+  color: #0dff00; /* Change the color to your desired link color */
+  text-decoration: none; /* Optional: Add underline to the links */
+}
+
+.clogin {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 400px;
+  margin: auto;
+  padding: 24px;
+  background-color: rgba(104, 202, 255, 0.208);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(14, 65, 101, 0.667);
+  color: white;
+}
 
 .todo-details label {
   color: #00ffa6;
@@ -156,7 +177,13 @@ h1, .h4, h4 {
 .todo-details .MuiButton-root:hover {
   background-color: rgba(56, 135, 142, 0.8);
 }
+.hh {
+  color: #20fffb;
+}
 
+.clogin label {
+  color: rgb(0, 255, 213);
+}
 /* Active effect for the button */
 .todo-details .MuiButton-root:active {
   transform: scale(0.98);

@@ -81,7 +81,7 @@ const Register = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container className='clogin' maxWidth="sm">
        <ToastContainer transition={Flip} />
       <Typography variant="h4" gutterBottom>Register</Typography>
       <form onSubmit={handleRegister}>

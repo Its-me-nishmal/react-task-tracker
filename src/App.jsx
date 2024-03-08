@@ -41,7 +41,7 @@ const App = () => {
 // Placeholder component for when user is not logged in
 const NotLoggedIn = () => {
   return (
-    <div className="not-logged-in">
+    <div className="clogin not-logged-in">
       <h1>You are not logged in</h1>
       <p>Please <Link to="/login">login</Link> or <Link to="/register">register</Link>.</p>
     </div>

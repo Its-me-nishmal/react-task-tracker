@@ -41,7 +41,7 @@ const Login = ({ setIsLoggedIn }) => {
         const userId = data.userId; // Assuming the user ID is returned in the response
         Cookies.set('userId', userId, { expires: 7 }); // Set the cookie to expire in 7 days
       } else {
-        toast.error("eroor");
+        toast.error("Invalid Email or Password");
       }
     } catch (error) {
       console.error('Error logging in:', error);
@@ -50,8 +50,8 @@ const Login = ({ setIsLoggedIn }) => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>Login</Typography>
+    <Container className='clogin' maxWidth="sm">
+      <Typography variant="h4" className='hh' gutterBottom>Login</Typography>
       <form onSubmit={handleLogin}>
         <TextField
           label="Email"
