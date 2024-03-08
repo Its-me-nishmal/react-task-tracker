@@ -23,6 +23,9 @@ body, .root {
 
 h1, .h4, h4 {
   text-align: center;
+  color: #20fffb;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
 }
 
 /* Container styles */
@@ -85,19 +88,25 @@ h1, .h4, h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.557);
+  background-color: rgba(0, 0, 0, 0.523);
 }
 
 .modal-content {
-  background: rgba(7, 74, 88, 0.338);
+  background: rgba(18, 146, 172, 0.678);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(8, 53, 91, 0.2);
+  box-shadow: 0 4px 8px rgba(43, 122, 187, 0.658);
 }
 
 .modal h2 {
   margin-bottom: 20px;
   text-align: center;
+  color: white;
+}
+
+
+.mm label {
+  color: rgb(31, 206, 191);
 }
 
 .modal-buttons {
@@ -120,6 +129,7 @@ h1, .h4, h4 {
   color: white;
   
 }
+
 
 .todo-details label {
   color: #00ffa6;

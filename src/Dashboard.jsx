@@ -154,13 +154,16 @@ const Dashboard = ({ handleLogout }) => {
             <div className="modal-content">
               <h2>Add New Task</h2>
               <TextField
+              className='mm'
                 label="Title"
                 variant="outlined"
                 value={newTodoTitle}
                 onChange={(e) => setNewTodoTitle(e.target.value)}
               />
               <br />
+              <br />
               <TextField
+              className='mm'
                 label="Subtitle"
                 variant="outlined"
                 value={newTodoSubtitle}
