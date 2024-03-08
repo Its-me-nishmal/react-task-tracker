@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Login from './Login';
 import Register from './Register';
 import Cookies from 'js-cookie';
+import TodoDetails from './TodoDetails';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,22 +14,34 @@ const App = () => {
     const userId = Cookies.get('userId');
     if (userId) {
       setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false); // Make sure to set isLoggedIn to false if userId is not found
     }
   }, []);
 
   return (
     <Router>
-      <Routes>
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/register" element={<Register />} />
-        {/* If logged in, render Dashboard, else redirect to login */}
-        {isLoggedIn ? (
-          <Route path="/" element={<Dashboard />} />
-        ) : (
-          <Route path="/" element={<Navigate to="/login" />} />
-        )}
-      </Routes>
+      <div className="app-container">
+        <Routes>
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/register" element={<Register />} />
+          {isLoggedIn && <Route path="/" element={<Dashboard />} />}
+          
+          {!isLoggedIn && <Route path="/" element={<NotLoggedIn />} />}
+          <Route path="/todo/:id" element={<TodoDetails/>} />
+        </Routes>
+      </div>
     </Router>
+  );
+};
+
+// Placeholder component for when user is not logged in
+const NotLoggedIn = () => {
+  return (
+    <div className="not-logged-in">
+      <h1>You are not logged in</h1>
+      <p>Please <a href="/login">login</a> or <a href="/register">register</a>.</p>
+    </div>
   );
 };
 
