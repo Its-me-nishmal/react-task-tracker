@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate  } from 'react-router-dom';
 import { Container, Button, TextField, CircularProgress, MenuItem } from '@mui/material'; // Import MenuItem for dropdown options
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -14,6 +15,9 @@ const TodoDetails = () => {
   const [newTodoSubtitle, setNewTodoSubtitle] = useState('');
   const [newTodoStatus, setNewTodoStatus] = useState('');
   const [loading, setLoading] = useState(true);
+  
+  // Using useNavigate hook to navigate programmatically
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchTodoData(id);
@@ -51,6 +55,9 @@ const TodoDetails = () => {
       }
       fetchTodoData(id);
       toast.success('Todo updated successfully');
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     } catch (error) {
       console.error('Error updating todo:', error);
       toast.error('Error updating todo');
@@ -66,6 +73,9 @@ const TodoDetails = () => {
         throw new Error('Failed to delete todo');
       }
       toast.success('Todo deleted successfully');
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
       // Redirect or update UI as needed after deletion
     } catch (error) {
       console.error('Error deleting todo:', error);

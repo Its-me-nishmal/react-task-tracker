@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, TextField, Typography, Container } from '@mui/material';
 import { toast } from 'react-toastify';
 
@@ -7,6 +7,7 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Define useNavigate hook here
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -20,12 +21,27 @@ const Register = () => {
     setPassword(event.target.value);
   };
 
+  const validateForm = () => {
+    if (!name.trim()) {
+      toast.error('Please enter your name');
+      return false;
+    }
+    if (!email.trim()) {
+      toast.error('Please enter your email');
+      return false;
+    }
+    if (!password.trim()) {
+      toast.error('Please enter your password');
+      return false;
+    }
+    return true;
+  };
+
   const handleRegister = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
-
-    // Validation
-    if (!name || !email || !password) {
-      toast.error('Please fill out all fields');
+    
+    // Validate form inputs
+    if (!validateForm()) {
       return;
     }
 
@@ -42,7 +58,9 @@ const Register = () => {
       if (response.ok) {
         toast.success('Registration successful!');
         // Redirect to login page
-        window.location.href = '/login';
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000); 
       } else {
         const errorData = await response.json();
         toast.error(errorData.message || 'Registration failed');

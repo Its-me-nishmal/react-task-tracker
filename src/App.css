@@ -1,38 +1,27 @@
 /* Root styles */
-body {
+body, .root {
   margin: 0;
   padding: 0;
-  background-image: url('https://ideogram.ai/api/images/direct/BJmwz27kS7GCK_122r-y1A.png'); /* Background image */
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-/* Root styles */
-.root {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-image: url('https://ideogram.ai/api/images/direct/BJmwz27kS7GCK_122r-y1A.png'); /* Background image */
+  background-image: url('https://ideogram.ai/api/images/direct/BJmwz27kS7GCK_122r-y1A.png');
   background-size: cover;
   background-position: center;
-  backdrop-filter: blur(10px); /* Blurring effect */
 }
+
 .not-logged-in {
   text-align: center;
-  align-items: center;
-  margin: auto;
   color: #ddddddc7;
 }
 
-.ll{
+.ll {
   color: #ddd;
 }
 
-h1{
+h1, .h4, h4 {
   text-align: center;
 }
 
@@ -43,13 +32,6 @@ h1{
   align-items: center;
 }
 
-/* Title styles */
-.h4 {
-  color: #fff; /* White text color */
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 /* Button container styles */
 .button-container {
   display: flex;
@@ -58,16 +40,14 @@ h1{
 }
 
 /* Button styles */
-.add-button,
-.logout-button {
-  color: #fff; /* White text color */
+.add-button, .logout-button, .MuiButton-root {
+  color: #fff;
   background-color: #dddddd1a !important;
 }
 
 /* Todo tabs styles */
 .todo-tabs {
-  background-color: rgba(255, 255, 255, 0.096); /* Semi-transparent background */
-  backdrop-filter: blur(8px); /* Blurring effect */
+  background-color: rgba(255, 255, 255, 0.096);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.715);
 }
@@ -95,32 +75,29 @@ h1{
   color: #ffffff;
 }
 
-h4 {
-  text-align: center;
-  color: #ffffff;
-  background-color: rgba(0, 213, 255, 0.306);
-}
 /* Modal styles */
 .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   background-color: rgba(0, 0, 0, 0.557);
 }
 
 .modal-content {
-  background: rgba(7, 74, 88, 0.338); /* Semi-transparent background */
+  background: rgba(7, 74, 88, 0.338);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(8, 53, 91, 0.2);
-  backdrop-filter: blur(10px);
 }
 
 .modal h2 {
   margin-bottom: 20px;
   text-align: center;
-  color: white;
 }
 
 .modal-buttons {
@@ -128,7 +105,6 @@ h4 {
   justify-content: space-between;
   margin-top: 20px;
 }
-
 
 /* Todo details container styles */
 .todo-details {
@@ -138,26 +114,10 @@ h4 {
   max-width: 400px;
   margin: auto;
   padding: 24px;
-  background-color: rgba(19, 86, 122, 0.08); /* Semi-transparent background */
-  backdrop-filter: blur(8px); /* Blurring effect */
+  background-color: rgba(19, 86, 122, 0.08);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  animation: fadeInUp 0.5s ease;
-  transform-origin: center;
-  overflow: hidden;
   color: white;
-}
-
-/* Keyframes for fadeInUp animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
 }
 
 /* Todo details text styles */
@@ -172,24 +132,18 @@ h4 {
 /* Todo details button styles */
 .todo-details .MuiButton-root {
   width: 100%;
-  background-color: rgba(76, 167, 175, 0.8); /* Semi-transparent button color */
+  background-color: rgba(76, 167, 175, 0.8);
   color: #fff;
-  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 /* Hover effect for the button */
 .todo-details .MuiButton-root:hover {
   background-color: rgba(56, 135, 142, 0.8);
-  transform: scale(1.05);
 }
 
 /* Active effect for the button */
 .todo-details .MuiButton-root:active {
   transform: scale(0.98);
-}
-
-.MuiInputLabel-root {
-  color: #bdbcbc9c !important;
 }
 
 /* Change input text color to white */
@@ -201,4 +155,3 @@ h4 {
 .MuiSelect-iconOutlined {
   color: #fff !important;
 }
-

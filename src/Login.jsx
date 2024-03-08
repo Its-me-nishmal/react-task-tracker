@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { Button, TextField, Typography, Container } from '@mui/material';
+import {Router} from 'react-router'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
 
 const Login = ({ setIsLoggedIn }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
@@ -28,6 +30,9 @@ const Login = ({ setIsLoggedIn }) => {
         setIsLoggedIn(true);
         // Show success toast
         toast.success('Login successful!');
+        setTimeout(() => {
+          navigate('/');
+        }, 2000); 
         // Set loginSuccess to true to render Link for navigation
         setLoginSuccess(true);
 
