@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import Login from './Login';
 import Register from './Register';
@@ -40,7 +40,7 @@ const NotLoggedIn = () => {
   return (
     <div className="not-logged-in">
       <h1>You are not logged in</h1>
-      <p>Please <a href="/login">login</a> or <a href="/register">register</a>.</p>
+      <p>Please <Link to="/login">login</Link> or <Link to="/register">register</Link>.</p>
     </div>
   );
 };

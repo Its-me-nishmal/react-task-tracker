@@ -107,7 +107,7 @@ const Dashboard = () => {
         <div className="button-container">
           <Button className="add-button" variant="contained" color="primary" onClick={handleModalOpen}>
             <AddIcon />
-            Add Todo
+            Add Task
           </Button>
           <Button className="logout-button" variant="contained" color="secondary" onClick={handleLogout}>
             Logout
@@ -119,31 +119,40 @@ const Dashboard = () => {
               <tr>
                 <th>ID</th>
                 <th>Title</th>
-                <th>Subtitle</th>
-                <th>Percentage</th>
+                <th>Sub Title</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              {privateTodoData && privateTodoData.map((todo, index) => (
-                <tr key={index} className="todo-row">
-                  <td>{index + 1}</td>
-                  <td>
-                    <Link to={`/todo/${todo._id}`}>{todo.title}</Link>
-                  </td>
-                  <td>{todo.subtitle}</td>
-                  <td>{todo.percentage}</td>
-                  <td>{todo.status}</td>
-                </tr>
-              ))}
+            {privateTodoData && privateTodoData.map((todo, index) => (
+  <tr key={index} className="todo-row">
+    <td>{index + 1}</td>
+    <td>
+      <Link className='ll' to={`/todo/${todo._id}`}>
+        {todo.title.length > 20 ? todo.title.substring(0, 20) + '...' : todo.title}
+      </Link>
+    </td>
+    <td>
+      <Link className='ll' to={`/todo/${todo._id}`}>
+        {todo.subtitle.length > 30 ? todo.subtitle.substring(0, 30) + '...' : todo.subtitle}
+      </Link>
+    </td>
+    <td>
+    <Link className='ll' to={`/todo/${todo._id}`}>
+        {todo.status}
+      </Link>
+    </td>
+  </tr>
+))}
+
             </tbody>
           </Table>
         </Tabs>
         <Modal open={openModal} onClose={handleModalClose}>
           <div className="modal">
             <div className="modal-content">
-              <h2>Add New Todo</h2>
-              <TextField label="Title" variant="outlined" value={newTodoTitle} onChange={(e) => setNewTodoTitle(e.target.value)} />
+              <h2>Add New Task</h2>
+              <TextField label="Title" variant="outlined" value={newTodoTitle} onChange={(e) => setNewTodoTitle(e.target.value)} /><br/>
               <TextField label="Subtitle" variant="outlined" value={newTodoSubtitle} onChange={(e) => setNewTodoSubtitle(e.target.value)} />
               <div className="modal-buttons">
                 <Button variant="contained" color="primary" onClick={handleAddTodo}>

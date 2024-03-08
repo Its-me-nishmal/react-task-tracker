@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, TextField, CircularProgress } from '@mui/material';
+import { Container, Button, TextField, CircularProgress, MenuItem } from '@mui/material'; // Import MenuItem for dropdown options
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import DeleteIcon from '@mui/icons-material/Delete'; // Import delete icon
 import './App.css';
 
 const TodoDetails = () => {
@@ -47,8 +50,26 @@ const TodoDetails = () => {
         throw new Error('Failed to update todo');
       }
       fetchTodoData(id);
+      toast.success('Todo updated successfully');
     } catch (error) {
       console.error('Error updating todo:', error);
+      toast.error('Error updating todo');
+    }
+  };
+
+  const handleDeleteTodo = async () => {
+    try {
+      const response = await fetch(`https://flutter-self-stack-api.vercel.app/api/todo/${id}?apiKey=flutterbyafaf`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete todo');
+      }
+      toast.success('Todo deleted successfully');
+      // Redirect or update UI as needed after deletion
+    } catch (error) {
+      console.error('Error deleting todo:', error);
+      toast.error('Error deleting todo');
     }
   };
 
@@ -63,28 +84,38 @@ const TodoDetails = () => {
   return (
     <div className="root">
       <Container>
-        <p>Todo Details</p>
+        <ToastContainer />
+        <p className='pp'>Todo Details</p>
         <div className="todo-details">
           <TextField
+            className='txt'
             label="Title"
             variant="outlined"
             defaultValue={todoData.title}
             onChange={(e) => setNewTodoTitle(e.target.value)}
           />
           <TextField
+            className='txt'
             label="Subtitle"
             variant="outlined"
             defaultValue={todoData.subtitle}
             onChange={(e) => setNewTodoSubtitle(e.target.value)}
           />
           <TextField
+            className='txt'
+            select
             label="Status"
-            variant="outlined"
-            defaultValue={todoData.status}
+            value={newTodoStatus || todoData.status}
             onChange={(e) => setNewTodoStatus(e.target.value)}
-          />
+          >
+            <MenuItem value="completed">Completed</MenuItem>
+            <MenuItem value="pending">Pending</MenuItem>
+          </TextField>
           <Button variant="contained" color="primary" onClick={handleUpdateTodo}>
             Update Todo
+          </Button>
+          <Button variant="contained" color="error" onClick={handleDeleteTodo}>
+            <DeleteIcon /> Delete Todo
           </Button>
         </div>
       </Container>

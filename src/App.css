@@ -1,113 +1,204 @@
-#root {
-  max-width: 100vw;
-  margin: 0 auto;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Dashboard.css */
-
-/* Material UI color variables */
-:root {
-  --primary-color: #1976d2;
-  --secondary-color: #f50057;
-}
-
-/* Example class for fixed width and height */
-.fixed-size {
-  width: 200px;
-  height: 100px;
-}
-
-/* Example styling for the loading spinner */
-.loading-container {
+/* Root styles */
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('https://ideogram.ai/api/images/direct/BJmwz27kS7GCK_122r-y1A.png'); /* Background image */
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
-
-
-/* App.css */
-.todo-tabs {
-  margin-top: 20px;
-}
-
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.modal h2 {
-  margin-bottom: 20px;
-}
-
-.modal .MuiTextField-root {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.modal .MuiButton-root {
-  margin-right: 10px;
-}
-
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
+/* Root styles */
 .root {
-  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://ideogram.ai/api/images/direct/BJmwz27kS7GCK_122r-y1A.png'); /* Background image */
+  background-size: cover;
+  background-position: center;
+  backdrop-filter: blur(10px); /* Blurring effect */
+}
+.not-logged-in {
+  text-align: center;
+  align-items: center;
+  margin: auto;
+  color: #ddddddc7;
 }
 
-.root h4 {
+.ll{
+  color: #ddd;
+}
+
+h1{
+  text-align: center;
+}
+
+/* Container styles */
+.Container {
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Title styles */
+.h4 {
+  color: #fff; /* White text color */
+  text-align: center;
   margin-bottom: 20px;
 }
 
+/* Button container styles */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Button styles */
+.add-button,
 .logout-button {
-  margin-top: 20px;
+  color: #fff; /* White text color */
+  background-color: #dddddd1a !important;
 }
 
+/* Todo tabs styles */
+.todo-tabs {
+  background-color: rgba(255, 255, 255, 0.096); /* Semi-transparent background */
+  backdrop-filter: blur(8px); /* Blurring effect */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.715);
+}
+
+/* Todo table styles */
 .todo-table {
-  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.todo-table th,
+/* Todo table header styles */
+.todo-table th {
+  background-color: rgba(0, 213, 255, 0.306);
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+  color: #ffffff;
+}
+
+/* Todo table row styles */
 .todo-table td {
   padding: 10px;
   border: 1px solid #ddd;
+  text-align: left;
+  color: #ffffff;
 }
 
-.todo-table th {
-  background-color: #f2f2f2;
+h4 {
+  text-align: center;
+  color: #ffffff;
+  background-color: rgba(0, 213, 255, 0.306);
 }
-
-.add-button {
-  margin-top: 20px;
-}
-
-.public-todos {
-  margin-top: 20px;
-}
-
+/* Modal styles */
 .modal {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.557);
 }
 
+.modal-content {
+  background: rgba(7, 74, 88, 0.338); /* Semi-transparent background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(8, 53, 91, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.modal h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: white;
+}
 
 .modal-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
+
+
+/* Todo details container styles */
+.todo-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 400px;
+  margin: auto;
+  padding: 24px;
+  background-color: rgba(19, 86, 122, 0.08); /* Semi-transparent background */
+  backdrop-filter: blur(8px); /* Blurring effect */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.5s ease;
+  transform-origin: center;
+  overflow: hidden;
+  color: white;
+}
+
+/* Keyframes for fadeInUp animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Todo details text styles */
+.pp {
+  color: #fff;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Todo details button styles */
+.todo-details .MuiButton-root {
+  width: 100%;
+  background-color: rgba(76, 167, 175, 0.8); /* Semi-transparent button color */
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for the button */
+.todo-details .MuiButton-root:hover {
+  background-color: rgba(56, 135, 142, 0.8);
+  transform: scale(1.05);
+}
+
+/* Active effect for the button */
+.todo-details .MuiButton-root:active {
+  transform: scale(0.98);
+}
+
+.MuiInputLabel-root {
+  color: #bdbcbc9c !important;
+}
+
+/* Change input text color to white */
+.MuiInputBase-input {
+  color: #fafafa !important;
+}
+
+/* Change select dropdown text color to white */
+.MuiSelect-iconOutlined {
+  color: #fff !important;
+}
+
