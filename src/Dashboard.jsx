@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import AddIcon from '@mui/icons-material/Add';
 import './App.css';
 import { ToastContainer, toast } from 'react-toastify';
+import annyang from 'annyang';
 
 const Dashboard = ({ handleLogout }) => {
   const [userData, setUserData] = useState(null);
@@ -15,7 +16,52 @@ const Dashboard = ({ handleLogout }) => {
   const [newTodoSubtitle, setNewTodoSubtitle] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  useEffect(() => {
+    // Initialize annyang if available
+    if (annyang) {
+      // Define commands and their callback functions
+      var commands = {
+        'add task': handleModalOpen, // Opens the modal to add a new task
+        'submit': handleAddTodo, // Submits the new task
+        'title *title': (title) => { 
+          console.log("Title voice input:", title);
+          setNewTodoTitle((prevTitle) => prevTitle ? prevTitle + ' ' + title : title); 
+        }, // Captures the title from voice input
+        'subtitle *subtitle': (subtitle) => { 
+          console.log("Subtitle voice input:", subtitle);
+          setNewTodoSubtitle((prevSubtitle) => prevSubtitle ? prevSubtitle + ' ' + subtitle : subtitle); 
+        }, // Captures the subtitle from voice input
+        'open *index': (index) => {
+          console.log("Open task:", index);
+          const elements = document.getElementsByClassName("okk");
+  if (elements.length > index) {
+    elements[index].click();
+  } else {
+    console.error("Index out of bounds:", index);
+  }
+        } // Navigates to the task with the specified index
+      };
+  
+      // Add commands to annyang
+      annyang.addCommands(commands);
+  
+      // Start listening
+      annyang.start();
+  
+      console.log("Annyang started");
+    } else {
+      console.log("Annyang not available");
+    }
+    
+    // Cleanup function to stop annyang when component unmounts
+    return () => {
+      if (annyang) {
+        annyang.abort();
+        console.log("Annyang aborted");
+      }
+    };
+  }, [privateTodoData, navigate]);
+  
   useEffect(() => {
     const userId = Cookies.get('userId');
     if (userId) {
@@ -66,9 +112,13 @@ const Dashboard = ({ handleLogout }) => {
 
   const handleAddTodo = async () => {
     try {
-      if (newTodoTitle.length < 3 || newTodoSubtitle.length < 3) {
+      const title = document.getElementById('newTodoTitle').value;
+      const subtitle = document.getElementById('newTodoSubtitle').value;
+
+      if (title.length < 3 || subtitle.length < 3) {
         return toast.error('Title and subtitle must contain at least 3 characters');
       }
+
       const userId = Cookies.get('userId');
       const response = await fetch(`https://flutter-self-stack-api.vercel.app/api/todo?apiKey=flutterbyafaf`, {
         method: 'POST',
@@ -76,8 +126,8 @@ const Dashboard = ({ handleLogout }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          title: newTodoTitle,
-          subtitle: newTodoSubtitle,
+          title: title,
+          subtitle: subtitle,
           createdBy: userId,
           isPublic: false
         }),
@@ -130,7 +180,7 @@ const Dashboard = ({ handleLogout }) => {
                   <tr key={index} className="todo-row">
                     <td>{index + 1}</td>
                     <td>
-                      <Link className="ll" to={`/todo/${todo._id}`}>
+                      <Link className="ll okk" to={`/todo/${todo._id}`}>
                         {todo.title.length > 20 ? todo.title.substring(0, 20) + '...' : todo.title}
                       </Link>
                     </td>
@@ -154,7 +204,8 @@ const Dashboard = ({ handleLogout }) => {
             <div className="modal-content">
               <h2>Add New Task</h2>
               <TextField
-              className='mm'
+                className='mm'
+                id='newTodoTitle'
                 label="Title"
                 variant="outlined"
                 value={newTodoTitle}
@@ -163,7 +214,8 @@ const Dashboard = ({ handleLogout }) => {
               <br />
               <br />
               <TextField
-              className='mm'
+                className='mm'
+                id='newTodoSubtitle'
                 label="Subtitle"
                 variant="outlined"
                 value={newTodoSubtitle}
