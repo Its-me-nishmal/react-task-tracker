@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, TextField, Typography, Container } from '@mui/material';
 import { ToastContainer, toast, Flip } from 'react-toastify';
+import Sound from 'react-sound';
+import warningSound from './assets/negative_beeps-6008.mp3';
+import successSound from './assets/success-1-6297.mp3'
 
 const Register = () => {
+  const [playWarningSound, setPlayWarningSound] = useState(false);
+  const [playsuccesssound, setSuccesSound] = useState(false)
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,6 +56,7 @@ const Register = () => {
     
     // Validate form inputs
     if (!validateForm()) {
+      setPlayWarningSound(true)
       return;
     }
 
@@ -65,16 +71,19 @@ const Register = () => {
       });
 
       if (response.ok) {
+        setSuccesSound(true)
         toast.success('Registration successful!');
         // Redirect to login page
         setTimeout(() => {
           navigate('/login');
         }, 1000); 
       } else {
+        setPlayWarningSound(true)
         const errorData = await response.json();
         toast.error(errorData.message || 'Registration failed');
       }
     } catch (error) {
+      setPlayWarningSound(true)
       console.error('Error registering user:', error);
       toast.error('Registration failed');
     }
@@ -82,6 +91,16 @@ const Register = () => {
 
   return (
     <Container className='clogin' maxWidth="sm">
+        <Sound
+        url={warningSound}
+        playStatus={playWarningSound ? Sound.status.PLAYING : Sound.status.STOPPED}
+        onFinishedPlaying={() => setPlayWarningSound(false)}
+      />
+      <Sound
+        url={successSound}
+        playStatus={playsuccesssound ? Sound.status.PLAYING : Sound.status.STOPPED}
+        onFinishedPlaying={() => setSuccesSound(false)}
+      />
        <ToastContainer transition={Flip} />
       <Typography variant="h4" gutterBottom>Register</Typography>
       <form onSubmit={handleRegister}>

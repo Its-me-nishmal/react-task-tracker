@@ -5,9 +5,14 @@ import {Router} from 'react-router'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
+import Sound from 'react-sound';
+import warningSound from './assets/negative_beeps-6008.mp3';
+import successSound from './assets/success-1-6297.mp3'
 
 const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
+  const [playWarningSound, setPlayWarningSound] = useState(false);
+  const [playsuccesssound, setSuccesSound] = useState(false)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
@@ -33,7 +38,7 @@ const Login = ({ setIsLoggedIn }) => {
         setTimeout(() => {
           navigate('/');
         }, 2000); 
-        // Set loginSuccess to true to render Link for navigation
+        setSuccesSound(true)
         setLoginSuccess(true);
 
         // Set a cookie with the user ID
@@ -41,9 +46,11 @@ const Login = ({ setIsLoggedIn }) => {
         const userId = data.userId; // Assuming the user ID is returned in the response
         Cookies.set('userId', userId, { expires: 7 }); // Set the cookie to expire in 7 days
       } else {
+        setPlayWarningSound(true); 
         toast.error("Invalid Email or Password");
       }
     } catch (error) {
+      setPlayWarningSound(true); 
       console.error('Error logging in:', error);
       toast.error('An error occurred. Please try again later.');
     }
@@ -52,6 +59,16 @@ const Login = ({ setIsLoggedIn }) => {
   return (
     <Container className='clogin' maxWidth="sm">
       <Typography variant="h4" className='hh' gutterBottom>Login</Typography>
+      <Sound
+        url={warningSound}
+        playStatus={playWarningSound ? Sound.status.PLAYING : Sound.status.STOPPED}
+        onFinishedPlaying={() => setPlayWarningSound(false)}
+      />
+      <Sound
+        url={successSound}
+        playStatus={playsuccesssound ? Sound.status.PLAYING : Sound.status.STOPPED}
+        onFinishedPlaying={() => setSuccesSound(false)}
+      />
       <form onSubmit={handleLogin}>
         <TextField
           label="Email"
