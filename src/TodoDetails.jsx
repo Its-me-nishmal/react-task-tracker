@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate  } from 'react-router-dom';
-import { Container, Button, TextField, CircularProgress, MenuItem } from '@mui/material'; // Import MenuItem for dropdown options
+import { Link, useNavigate } from 'react-router-dom';
+import { Container, Button, TextField, CircularProgress, MenuItem } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DeleteIcon from '@mui/icons-material/Delete'; // Import delete icon
+import DeleteIcon from '@mui/icons-material/Delete';
+import Sound from 'react-sound';
+import successSound from './assets/success-1-6297.mp3';
+import warningSound from './assets/negative_beeps-6008.mp3';
+import deleteSound from './assets/Voicy_Roblox Delete.mp3';
 import './App.css';
 
 const TodoDetails = () => {
@@ -15,8 +19,9 @@ const TodoDetails = () => {
   const [newTodoSubtitle, setNewTodoSubtitle] = useState('');
   const [newTodoStatus, setNewTodoStatus] = useState('');
   const [loading, setLoading] = useState(true);
-  
-  // Using useNavigate hook to navigate programmatically
+  const [playWarningSound, setPlayWarningSound] = useState(false);
+  const [playSuccessSound, setPlaySuccessSound] = useState(false);
+  const [playDeleteSound, setPlayDeleteSound] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,12 +60,14 @@ const TodoDetails = () => {
       }
       fetchTodoData(id);
       toast.success('Todo updated successfully');
+      setPlaySuccessSound(true);
       setTimeout(() => {
         navigate('/');
       }, 3000);
     } catch (error) {
       console.error('Error updating todo:', error);
       toast.error('Error updating todo');
+      setPlayWarningSound(true);
     }
   };
 
@@ -73,13 +80,14 @@ const TodoDetails = () => {
         throw new Error('Failed to delete todo');
       }
       toast.success('Todo deleted successfully');
+      setPlayDeleteSound(true);
       setTimeout(() => {
         navigate('/');
       }, 3000);
-      // Redirect or update UI as needed after deletion
     } catch (error) {
       console.error('Error deleting todo:', error);
       toast.error('Error deleting todo');
+      setPlayWarningSound(true);
     }
   };
 
@@ -128,6 +136,25 @@ const TodoDetails = () => {
             <DeleteIcon /> Delete Todo
           </Button>
         </div>
+        {/* Sound components */}
+        <Sound
+          url={warningSound}
+          playStatus={playWarningSound ? Sound.status.PLAYING : Sound.status.STOPPED}
+          onFinishedPlaying={() => setPlayWarningSound(false)}
+        />
+        <Sound
+          url={successSound}
+          playStatus={playSuccessSound ? Sound.status.PLAYING : Sound.status.STOPPED}
+          onFinishedPlaying={() => setPlaySuccessSound(false)}
+        />
+       <Sound
+  url={deleteSound}
+  playStatus={playDeleteSound ? Sound.status.PLAYING : Sound.status.STOPPED}
+  onFinishedPlaying={() => {
+    setPlayDeleteSound(false); // Stop the delete sound after it finishes playing
+    setTimeout(() => setPlayDeleteSound(false), 1000); // Set a timeout to stop the sound after 1 second
+  }}
+/>
       </Container>
     </div>
   );
