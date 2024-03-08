@@ -110,18 +110,24 @@ h1, .h4, h4 {
 .todo-details {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   max-width: 400px;
   margin: auto;
   padding: 24px;
-  background-color: rgba(19, 86, 122, 0.08);
+  background-color: rgba(104, 202, 255, 0.208);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(14, 65, 101, 0.667);
   color: white;
+  
 }
 
+.todo-details label {
+  color: #00ffa6;
+   /* Change the color to your desired color */
+}
 /* Todo details text styles */
 .pp {
+  
   color: #fff;
   text-align: center;
   font-size: 30px;
