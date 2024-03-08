@@ -18,6 +18,10 @@ const App = () => {
       setIsLoggedIn(false); // Make sure to set isLoggedIn to false if userId is not found
     }
   }, []);
+  const handleLogout = () => {
+    Cookies.remove('userId');
+    setIsLoggedIn(false); // Update isLoggedIn state to indicate user is not logged in
+  };
 
   return (
     <Router>
@@ -25,8 +29,7 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/register" element={<Register />} />
-          {isLoggedIn && <Route path="/" element={<Dashboard />} />}
-          
+          {isLoggedIn && <Route path="/" element={<Dashboard handleLogout={handleLogout} />} />}
           {!isLoggedIn && <Route path="/" element={<NotLoggedIn />} />}
           <Route path="/todo/:id" element={<TodoDetails/>} />
         </Routes>

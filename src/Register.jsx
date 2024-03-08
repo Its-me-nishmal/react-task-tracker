@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, TextField, Typography, Container } from '@mui/material';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast, Flip } from 'react-toastify';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -22,20 +22,29 @@ const Register = () => {
   };
 
   const validateForm = () => {
-    if (!name.trim()) {
-      toast.error('Please enter your name');
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      toast.error('Please fill in all fields');
       return false;
     }
-    if (!email.trim()) {
-      toast.error('Please enter your email');
+    if (name.length < 3 || name.length > 15) {
+      toast.error('Name must be between 3 and 15 characters');
       return false;
     }
-    if (!password.trim()) {
-      toast.error('Please enter your password');
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      toast.error('Please enter a valid email address');
+      return false;
+    }
+    if (password.length < 8) {
+      toast.error('Password must be at least 8 characters long');
+      return false;
+    }
+    if (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+      toast.error('Password must contain at least one lowercase letter, one uppercase letter, and one number');
       return false;
     }
     return true;
   };
+  
 
   const handleRegister = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -73,6 +82,7 @@ const Register = () => {
 
   return (
     <Container maxWidth="sm">
+       <ToastContainer transition={Flip} />
       <Typography variant="h4" gutterBottom>Register</Typography>
       <form onSubmit={handleRegister}>
         <TextField label="Name" fullWidth margin="normal" value={name} onChange={handleNameChange} />

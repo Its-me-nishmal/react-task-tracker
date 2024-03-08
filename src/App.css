@@ -155,3 +155,29 @@ h1, .h4, h4 {
 .MuiSelect-iconOutlined {
   color: #fff !important;
 }
+
+/* Custom styles for Toastify notifications with glass effect */
+.Toastify__toast-container {
+  z-index: 9999;
+}
+
+.Toastify__toast {
+  border-radius: 8px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.3); /* Adjust the opacity as needed */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #fff; /* Text color */
+}
+
+.Toastify__toast--error {
+  background-color: #ff5252; /* Error toast background color */
+}
+
+.Toastify__toast--success {
+  background-color: #4caf50; /* Success toast background color */
+}
+
+.Toastify__toast--warning {
+  background-color: #ffa726; /* Warning toast background color */
+}

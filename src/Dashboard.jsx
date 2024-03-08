@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Table, CircularProgress, Tabs, Modal, TextField } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import AddIcon from '@mui/icons-material/Add';
 import './App.css';
+import { ToastContainer, toast } from 'react-toastify';
 
-const Dashboard = () => {
+const Dashboard = ({ handleLogout }) => {
   const [userData, setUserData] = useState(null);
   const [privateTodoData, setPrivateTodoData] = useState(null);
   const [tabValue, setTabValue] = useState(0);
@@ -13,6 +14,7 @@ const Dashboard = () => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
   const [newTodoSubtitle, setNewTodoSubtitle] = useState('');
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userId = Cookies.get('userId');
@@ -50,11 +52,6 @@ const Dashboard = () => {
     }
   };
 
-  const handleLogout = () => {
-    Cookies.remove('userId');
-    window.location.reload();
-  };
-
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -69,6 +66,9 @@ const Dashboard = () => {
 
   const handleAddTodo = async () => {
     try {
+      if (newTodoTitle.length < 3 || newTodoSubtitle.length < 3) {
+        return toast.error('Title and subtitle must contain at least 3 characters');
+      }
       const userId = Cookies.get('userId');
       const response = await fetch(`https://flutter-self-stack-api.vercel.app/api/todo?apiKey=flutterbyafaf`, {
         method: 'POST',
@@ -83,7 +83,7 @@ const Dashboard = () => {
         }),
       });
       if (!response.ok) {
-        throw new Error('Failed to add todo');
+        toast.error('Error when adding Task');
       }
       handleModalClose();
       fetchPrivateTodoData(userId);
@@ -103,6 +103,7 @@ const Dashboard = () => {
   return (
     <div className="root">
       <Container>
+        <ToastContainer />
         <h4>Welcome {userData.user.name} to Dashboard</h4>
         <div className="button-container">
           <Button className="add-button" variant="contained" color="primary" onClick={handleModalOpen}>
@@ -124,27 +125,27 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-            {privateTodoData && privateTodoData.map((todo, index) => (
-  <tr key={index} className="todo-row">
-    <td>{index + 1}</td>
-    <td>
-      <Link className='ll' to={`/todo/${todo._id}`}>
-        {todo.title.length > 20 ? todo.title.substring(0, 20) + '...' : todo.title}
-      </Link>
-    </td>
-    <td>
-      <Link className='ll' to={`/todo/${todo._id}`}>
-        {todo.subtitle.length > 30 ? todo.subtitle.substring(0, 30) + '...' : todo.subtitle}
-      </Link>
-    </td>
-    <td>
-    <Link className='ll' to={`/todo/${todo._id}`}>
-        {todo.status}
-      </Link>
-    </td>
-  </tr>
-))}
-
+              {privateTodoData &&
+                privateTodoData.map((todo, index) => (
+                  <tr key={index} className="todo-row">
+                    <td>{index + 1}</td>
+                    <td>
+                      <Link className="ll" to={`/todo/${todo._id}`}>
+                        {todo.title.length > 20 ? todo.title.substring(0, 20) + '...' : todo.title}
+                      </Link>
+                    </td>
+                    <td>
+                      <Link className="ll" to={`/todo/${todo._id}`}>
+                        {todo.subtitle.length > 30 ? todo.subtitle.substring(0, 30) + '...' : todo.subtitle}
+                      </Link>
+                    </td>
+                    <td>
+                      <Link className="ll" to={`/todo/${todo._id}`}>
+                        {todo.status}
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         </Tabs>
@@ -152,8 +153,19 @@ const Dashboard = () => {
           <div className="modal">
             <div className="modal-content">
               <h2>Add New Task</h2>
-              <TextField label="Title" variant="outlined" value={newTodoTitle} onChange={(e) => setNewTodoTitle(e.target.value)} /><br/>
-              <TextField label="Subtitle" variant="outlined" value={newTodoSubtitle} onChange={(e) => setNewTodoSubtitle(e.target.value)} />
+              <TextField
+                label="Title"
+                variant="outlined"
+                value={newTodoTitle}
+                onChange={(e) => setNewTodoTitle(e.target.value)}
+              />
+              <br />
+              <TextField
+                label="Subtitle"
+                variant="outlined"
+                value={newTodoSubtitle}
+                onChange={(e) => setNewTodoSubtitle(e.target.value)}
+              />
               <div className="modal-buttons">
                 <Button variant="contained" color="primary" onClick={handleAddTodo}>
                   Add
